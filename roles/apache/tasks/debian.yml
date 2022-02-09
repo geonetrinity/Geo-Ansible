@@ -1,0 +1,6 @@
+---
+- name: "Install Apache Web Server on Debian Based Systems"
+  apt:
+    name: apache2
+    update_cache: yes
+    state: latest

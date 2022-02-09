@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: yes
+  name: "Install and Configure Apache Web Server on Linux"
+  roles:
+  - apache

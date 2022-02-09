@@ -1,0 +1,6 @@
+---
+- name: "Install Apache Web Server on RHEL Based Systems"
+  yum:
+    name: httpd
+    update_cache: yes
+    state: latest

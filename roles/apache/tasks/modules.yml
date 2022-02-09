@@ -1,0 +1,8 @@
+---
+- name: "Enable mod_rewrite module"
+  apache2_module:
+    name: rewrite
+    state: present
+
+  notify:
+  - restart apache
