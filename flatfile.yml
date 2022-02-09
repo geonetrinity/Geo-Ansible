@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+    ntp_server: [pool.ntp.org, south-america.pool.ntp.org]
   tasks:
    - name: Install ntpdate
      apt:
@@ -11,12 +13,23 @@
        name: apache2
        state: absent
 
-   - name: Install the latest version of Apache and MariaDB
+   - name: Install Multiple Packages - latest
      ansible.builtin.package:
        name:
-         - apache2
+#         - apache2
 #         - mariadb-server
          - ntp
        state: latest
      register: apt
    - debug: msg={{ apt.stdout.split('\n')[:-1] }}
+
+   - name: Copy the ntp.conf template file
+     template: src=files/ntp.conf.j2 dest=/etc/ntp.conf
+     notify: 
+       - restart ntp
+   
+  handlers:
+   - name: restart ntp
+     service: name=ntp state=restarted
+
+#-c",) e o -

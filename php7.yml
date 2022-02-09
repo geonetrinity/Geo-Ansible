@@ -3,4 +3,4 @@
   become: yes
   name: "Ansible Roles"
   roles:
-  - php
+  - php7
