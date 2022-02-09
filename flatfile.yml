@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+   - name: Install ntpdate
+     apt:
+       name: ntpdate
+       state: present
+
+   - name: Remove the apache package
+     ansible.builtin.package:
+       name: apache2
+       state: absent
+
+   - name: Install the latest version of Apache and MariaDB
+     ansible.builtin.package:
+       name:
+         - apache2
+#         - mariadb-server
+         - ntp
+       state: latest
+     register: apt
+   - debug: msg={{ apt.stdout.split('\n')[:-1] }}

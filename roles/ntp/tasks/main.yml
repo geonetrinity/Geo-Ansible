@@ -1,0 +1,37 @@
+---
+# tasks file for ntp
+# ntp configuration playbook
+
+- name: allow ntp through firewall   
+  shell: firewall-cmd --add-service=ntp --permanent
+
+- name: firewall reload
+  shell: firewall-cmd --reload
+
+- name: set timezone
+  shell: timedatectl set-timezone America/New_York
+
+- name: Install NTP
+  apt: 
+   name: ntp 
+   state: present
+
+- name: Copy over the NTP configuration
+  copy: src=files/ntp.conf dest=/etc/ntp.conf
+  notify:
+  - restart ntpd
+
+- name: Make sure NTP is stopped
+  service: name=ntpd state=stopped enabled=yes
+
+- name: Sync time initialy
+  shell: ntpdate 0.centos.pool.ntp.org
+
+- name: Make sure NTP is started up
+  service: name=ntpd state=restarted enabled=yes
+
+- name: Sync hwclock
+  shell: hwclock -w
+
+- name: restart ntpd
+  service: name=ntpd state=restarted
