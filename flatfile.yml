@@ -20,8 +20,8 @@
 #         - mariadb-server
          - ntp
        state: latest
-     register: apt
-   - debug: msg={{ apt.stdout.split('\n')[:-1] }}
+#     register: apt
+#   - debug: msg={{ apt.stdout.split('\n')[:-1] }}
 
    - name: Copy the ntp.conf template file
      template: src=files/ntp.conf.j2 dest=/etc/ntp.conf
